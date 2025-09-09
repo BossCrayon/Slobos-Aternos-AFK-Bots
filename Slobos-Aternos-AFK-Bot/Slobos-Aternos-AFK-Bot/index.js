@@ -89,24 +89,6 @@ function createBot() {
         .catch(error => console.error('[ERROR]', error));
     }
 
-    // Chat messages
-    if (config.utils['chat-messages'].enabled) {
-      console.log('[INFO] Started chat-messages module');
-      const messages = config.utils['chat-messages']['messages'];
-
-      if (config.utils['chat-messages'].repeat) {
-        const delay = config.utils['chat-messages']['repeat-delay'];
-        let i = 0;
-
-        setInterval(() => {
-          bot.chat(messages[i]);
-          i = (i + 1) % messages.length;
-        }, delay * 1000);
-      } else {
-        messages.forEach((msg) => bot.chat(msg));
-      }
-    }
-
     // Move to position
     if (config.position.enabled) {
       const pos = config.position;
@@ -144,7 +126,7 @@ function createBot() {
     );
   });
 
-  // Fixed typo: auto-reconnect-delay ✅
+  // Auto Reconnect
   if (config.utils['auto-reconnect']) {
     bot.on('end', () => {
       console.log('[INFO] Disconnected. Reconnecting...');
